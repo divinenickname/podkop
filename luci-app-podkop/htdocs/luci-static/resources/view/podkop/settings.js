@@ -283,6 +283,44 @@ function createSettingsContent(section) {
   o.rmempty = false;
 
   o = section.option(
+    form.Value,
+    "github_raw_url",
+    _("GitHub Raw URL"),
+    _("Base URL for community subnet source lists"),
+  );
+  o.default = "https://raw.githubusercontent.com/itdoginfo/allow-domains/main";
+  o.placeholder = "https://raw.githubusercontent.com/itdoginfo/allow-domains/main";
+  o.rmempty = false;
+  o.validate = function (section_id, value) {
+    const validation = main.validateUrl(value);
+
+    if (validation.valid) {
+      return true;
+    }
+
+    return validation.message;
+  };
+
+  o = section.option(
+    form.Value,
+    "srs_main_url",
+    _("SRS Main URL"),
+    _("Base URL for community SRS downloads"),
+  );
+  o.default = "https://github.com/itdoginfo/allow-domains/releases/latest/download";
+  o.placeholder = "https://github.com/itdoginfo/allow-domains/releases/latest/download";
+  o.rmempty = false;
+  o.validate = function (section_id, value) {
+    const validation = main.validateUrl(value);
+
+    if (validation.valid) {
+      return true;
+    }
+
+    return validation.message;
+  };
+
+  o = section.option(
     form.Flag,
     "download_lists_via_proxy",
     _("Download Lists via Proxy/VPN"),

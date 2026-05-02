@@ -32,6 +32,7 @@ check_required_file "$PODKOP_LIB/rulesets.sh"
 . "$PODKOP_LIB/rulesets.sh"
 
 config_load "$PODKOP_CONFIG"
+apply_runtime_constants
 
 check_requirements() {
     log "Check Requirements"
