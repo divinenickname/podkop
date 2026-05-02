@@ -51,8 +51,10 @@ SB_EXCLUSION_RULE_TAG="exclusion-rule-tag"
 SB_CLASH_API_CONTROLLER_PORT=9090
 
 ## Lists
-GITHUB_RAW_URL="https://raw.githubusercontent.com/itdoginfo/allow-domains/main"
-SRS_MAIN_URL="https://github.com/itdoginfo/allow-domains/releases/latest/download"
+DEFAULT_GITHUB_RAW_URL="https://raw.githubusercontent.com/itdoginfo/allow-domains/main"
+DEFAULT_SRS_MAIN_URL="https://github.com/itdoginfo/allow-domains/releases/latest/download"
+GITHUB_RAW_URL="$DEFAULT_GITHUB_RAW_URL"
+SRS_MAIN_URL="$DEFAULT_SRS_MAIN_URL"
 SUBNETS_TWITTER="${GITHUB_RAW_URL}/Subnets/IPv4/twitter.lst"
 SUBNETS_META="${GITHUB_RAW_URL}/Subnets/IPv4/meta.lst"
 SUBNETS_DISCORD="${GITHUB_RAW_URL}/Subnets/IPv4/discord.lst"
@@ -64,3 +66,27 @@ SUBNETS_OVH="${GITHUB_RAW_URL}/Subnets/IPv4/ovh.lst"
 SUBNETS_DIGITALOCEAN="${GITHUB_RAW_URL}/Subnets/IPv4/digitalocean.lst"
 SUBNETS_CLOUDFRONT="${GITHUB_RAW_URL}/Subnets/IPv4/cloudfront.lst"
 COMMUNITY_SERVICES="russia_inside russia_outside ukraine_inside geoblock block porn news anime youtube hdrezka tiktok google_ai google_play hodca discord meta twitter cloudflare cloudfront digitalocean hetzner ovh telegram roblox"
+
+apply_runtime_constants() {
+    local configured_github_raw_url configured_srs_main_url
+
+    config_get configured_github_raw_url "settings" "github_raw_url" "$DEFAULT_GITHUB_RAW_URL"
+    config_get configured_srs_main_url "settings" "srs_main_url" "$DEFAULT_SRS_MAIN_URL"
+
+    [ -n "$configured_github_raw_url" ] || configured_github_raw_url="$DEFAULT_GITHUB_RAW_URL"
+    [ -n "$configured_srs_main_url" ] || configured_srs_main_url="$DEFAULT_SRS_MAIN_URL"
+
+    GITHUB_RAW_URL="${configured_github_raw_url%/}"
+    SRS_MAIN_URL="${configured_srs_main_url%/}"
+
+    SUBNETS_TWITTER="${GITHUB_RAW_URL}/Subnets/IPv4/twitter.lst"
+    SUBNETS_META="${GITHUB_RAW_URL}/Subnets/IPv4/meta.lst"
+    SUBNETS_DISCORD="${GITHUB_RAW_URL}/Subnets/IPv4/discord.lst"
+    SUBNETS_ROBLOX="${GITHUB_RAW_URL}/Subnets/IPv4/roblox.lst"
+    SUBNETS_TELERAM="${GITHUB_RAW_URL}/Subnets/IPv4/telegram.lst"
+    SUBNETS_CLOUDFLARE="${GITHUB_RAW_URL}/Subnets/IPv4/cloudflare.lst"
+    SUBNETS_HETZNER="${GITHUB_RAW_URL}/Subnets/IPv4/hetzner.lst"
+    SUBNETS_OVH="${GITHUB_RAW_URL}/Subnets/IPv4/ovh.lst"
+    SUBNETS_DIGITALOCEAN="${GITHUB_RAW_URL}/Subnets/IPv4/digitalocean.lst"
+    SUBNETS_CLOUDFRONT="${GITHUB_RAW_URL}/Subnets/IPv4/cloudfront.lst"
+}
