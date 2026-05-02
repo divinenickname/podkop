@@ -36,6 +36,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v5.0.0
+        with:
+          node-version: '22'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Build LuCI frontend
+        working-directory: fe-app-podkop
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
       - name: Build ${{ matrix.package_type }}
         uses: docker/build-push-action@v6.18.0
         with:
