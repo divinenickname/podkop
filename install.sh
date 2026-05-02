@@ -115,7 +115,7 @@ main() {
     fi
 
     if command -v curl >/dev/null 2>&1; then
-        check_response=$(curl -s "https://api.github.com/repos/itdoginfo/podkop/releases/latest")
+        check_response=$(curl -s "https://api.github.com/repos/divinenickname/podkop/releases/latest")
 
         if echo "$check_response" | grep -q 'API rate limit '; then
             msg "You've reached the GitHub rate limit. Repeat in five minutes."
